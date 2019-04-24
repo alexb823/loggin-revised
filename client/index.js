@@ -5,11 +5,13 @@ import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom
 import store from './store'
 import Login from './login'
 import UserPage from './user-page'
+import {sessionLogin} from './store'
 
 
 
 class _Main extends Component {
   componentDidMount () {
+    this.props.sessionLogin()
   }
 
   render () {
@@ -36,7 +38,13 @@ const mapStateToProps = ({ user})=> {
   };
 };
 
-const Main = connect(mapStateToProps)(_Main);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sessionLogin: ()=> dispatch(sessionLogin())
+  }
+}
+
+const Main = connect(mapStateToProps, mapDispatchToProps)(_Main);
 
 ReactDOM.render(
   <Provider store={store}>
